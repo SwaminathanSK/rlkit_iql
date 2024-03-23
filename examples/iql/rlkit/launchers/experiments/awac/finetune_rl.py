@@ -457,5 +457,5 @@ def experiment(variant):
         pickle.dump(buffers, open(buffer_path, "wb"))
 
     wandb.login(key = "9693e19323d20b494a26a6ee07f05881b2107bf8")
-    run = wandb.init(project="Baselines", config=variant)
+    run = wandb.init(project="Baselines_IQL", config=variant)
     algorithm.train(run)
