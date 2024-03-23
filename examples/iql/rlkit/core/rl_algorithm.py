@@ -54,9 +54,11 @@ class BaseRLAlgorithm(object, metaclass=abc.ABCMeta):
     def _begin_epoch(self, epoch):
         pass
 
-    def _end_epoch(self, epoch):
+    def _end_epoch(self, epoch, run):
         snapshot = self._get_snapshot()
         logger.save_itr_params(epoch, snapshot)
+        run.log(snapshot)
+        
         gt.stamp('saving')
         self._log_stats(epoch)
 

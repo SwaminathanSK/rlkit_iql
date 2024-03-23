@@ -16,6 +16,7 @@ import json
 import pickle
 import errno
 import torch
+import wandb
 
 from rlkit.core.tabulate import tabulate
 from collections import OrderedDict
@@ -336,4 +337,5 @@ class Logger(object):
 
 
 logger = Logger()
+run = wandb.init()
 

@@ -45,6 +45,8 @@ from rlkit.torch.networks import LinearTransform
 
 import random
 
+import wandb
+
 ENV_PARAMS = {
     'HalfCheetah-v2': {
         'num_expl_steps_per_train_loop': 1000,
@@ -454,4 +456,6 @@ def experiment(variant):
         buffer_path = osp.join(logger.get_snapshot_dir(), 'buffers.p')
         pickle.dump(buffers, open(buffer_path, "wb"))
 
-    algorithm.train()
+    wandb.login(key = "9693e19323d20b494a26a6ee07f05881b2107bf8")
+    run = wandb.init(project="Baselines", config=variant)
+    algorithm.train(run)
