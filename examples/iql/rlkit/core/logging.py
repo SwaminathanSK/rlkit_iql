@@ -337,5 +337,4 @@ class Logger(object):
 
 
 logger = Logger()
-run = wandb.init()
 
