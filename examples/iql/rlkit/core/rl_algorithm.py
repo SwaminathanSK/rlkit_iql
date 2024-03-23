@@ -57,8 +57,8 @@ class BaseRLAlgorithm(object, metaclass=abc.ABCMeta):
     def _end_epoch(self, epoch, run):
         snapshot = self._get_snapshot()
         logger.save_itr_params(epoch, snapshot)
-        run.log(snapshot)
-        
+        run.log(logger)
+
         gt.stamp('saving')
         self._log_stats(epoch)
 
@@ -80,6 +80,7 @@ class BaseRLAlgorithm(object, metaclass=abc.ABCMeta):
             snapshot['evaluation/' + k] = v
         for k, v in self.replay_buffer.get_snapshot().items():
             snapshot['replay_buffer/' + k] = v
+        
         return snapshot
 
     def _log_stats(self, epoch):
