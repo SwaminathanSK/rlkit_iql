@@ -135,7 +135,7 @@ class BaseRLAlgorithm(object, metaclass=abc.ABCMeta):
             prefix="eval/",
         )
 
-        run.log(self.eval_data_collector.get_diagnostics() | self.eval_env.get_diagnostics(eval_paths) | eval_util.get_generic_path_information(eval_paths))
+        run.log(self.eval_data_collector.get_diagnostics() | eval_util.get_generic_path_information(eval_paths))
 
         """
         Misc
