@@ -57,10 +57,10 @@ class BaseRLAlgorithm(object, metaclass=abc.ABCMeta):
     def _end_epoch(self, epoch, run):
         snapshot = self._get_snapshot()
         logger.save_itr_params(epoch, snapshot)
-        run.log(logger)
+        # run.log(logger)
 
         gt.stamp('saving')
-        self._log_stats(epoch)
+        self._log_stats(epoch, run)
 
         self.expl_data_collector.end_epoch(epoch)
         self.eval_data_collector.end_epoch(epoch)
@@ -83,7 +83,7 @@ class BaseRLAlgorithm(object, metaclass=abc.ABCMeta):
         
         return snapshot
 
-    def _log_stats(self, epoch):
+    def _log_stats(self, epoch, run):
         logger.log("Epoch {} finished".format(epoch), with_timestamp=True)
         logger.record_dict({"epoch": epoch})
 
@@ -134,6 +134,8 @@ class BaseRLAlgorithm(object, metaclass=abc.ABCMeta):
             eval_util.get_generic_path_information(eval_paths),
             prefix="eval/",
         )
+
+        run.log(self.eval_data_collector.get_diagnostics() | self.eval_env.get_diagnostics(eval_paths) | eval_util.get_generic_path_information(eval_paths))
 
         """
         Misc
